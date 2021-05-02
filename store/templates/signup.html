@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<br><br><br><br>
+<div class="container mt-4">
+
+    <div class="p-4 m-4">
+
+
+        <div class="col-lg-5 rounded mx-auto border pt-4 bg-dark">
+            <div class="text-center col">
+
+                <!-- <hr> -->
+                <div class="display-8"><p>CREATE AN ACCOUNT</p></div>
+                <hr>
+            </div>
+            <h3 class="alert alert-light border rounded" hidden>Create An Account</h3>
+
+            <form action="#" method="post">
+
+                {% csrf_token %}
+
+                {% if error%}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+                {% endif %}
+                <!-- firstname -->
+                <div class="form-group">
+                    <label for=""><p>First Name</p></label>
+                    <input class="form-control form-control-sm" name="firstname"
+                           placeholder="" type="text"
+                           value="{{values.first_name}}">
+                </div>
+
+                <!-- last name -->
+                <div class="form-group">
+                    <label for=""><p>Last Name</p></label>
+                    <input class="form-control form-control-sm" name="lastname"
+                           type="text" value="{{values.last_name}}"
+                    >
+                </div>
+
+                <!-- phone -->
+                <div class="form-group">
+                    <label for=""><p>Phone</p></label>
+                    <input class="form-control form-control-sm" name="phone"
+                           placeholder="565698959"
+                           type="text"
+                           value="{{values.phone}}">
+                </div>
+                <!-- email -->
+                <div class="form-group">
+                    <label for=""><p>Email</p></label>
+                    <input class=" form-control-sm form-control" name="email" placeholder="example@gmail.com"
+                           required
+                           type="email" value="{{values.email}}">
+                </div>
+
+
+                <!-- password -->
+                <div class="form-group">
+                    <label for=""><p>Password</p></label>
+                    <input class="form-control form-control-sm"
+                           id=""
+                           name="password"
+                           placeholder="********" type="password">
+                </div>
+
+                <hr>
+                <div class="form-group">
+                    <input class="btn btn-sm btn-info" type="submit" value="Create An Account ">
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

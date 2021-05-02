@@ -1,0 +1,116 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+<br><br><br>
+<div class="container-fluid text-center ">
+    <div class="border rounded p-4 m-4 bg-dark ">
+        <p class="display-4 ">Your Cart</p>
+        <hr>
+        <table class="table table-borderless ">
+            <thead scope="row">
+            <tr scope="row">
+                <th scope="col">S.No.</th>
+                <th scope="col">Image</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Add/Remove</th>
+            </tr>
+            </thead>
+            <tbody scope="row">
+
+            {% for product in products %}
+            <tr>
+                <td scope="col">{{forloop.counter}}</td>
+                <td scope="col"><img alt="" class="rounded-circle" src="{{product.image.url}}" style="height: 50px;"></td>
+                <td scope="col">{{product.name}}</td>
+                <td scope="col">{{product.price|currency}}</td>
+                <td scope="col">{{product|cart_quantity:request.session.cart}}</td>
+                <td scope="col">{{product|price_total:request.session.cart|currency}}</td>
+                <td scope="col">
+                    <form action="/#{{product.id}}" class="col-2 " method="post">
+                        {% csrf_token %}
+                        <input hidden name='product' type="text" value='{{product.id}}'>
+                        <input class="btn btn-info" type="submit" value="Add">
+                    </form>
+                    <form action="/#{{product.id}}" class="col-2 " method="post">
+                        {% csrf_token %}
+                        <input hidden name='product' type="text" value='{{product.id}}'>
+                        <input hidden name='remove' type="text" value='True'>
+                        <input class="btn btn-danger" type="submit" value="Remove">
+                    </form>
+
+                </td>
+            </tr>
+
+
+            {% endfor %}
+
+            </tbody>
+
+            <tfoot scope="row">
+            <tr>
+                <th colspan="4"></th>
+                <th class="" colspan="">Total</th>
+                <th>{{products|total_cart_price:request.session.cart|currency}}</th>
+            </tr>
+            </tfoot>
+        </table>
+        <hr>
+        <div class="m-3 p-3">
+            <a class="btn btn-outline-info border rounded  col-lg-3 float-right" data-target="#exampleModal"
+               data-toggle="modal"
+               href="#">Check out</a>
+        </div>
+        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" role="dialog"
+        tabindex="-1">
+    <div class="modal-dialog mt-4" role="document">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Check Out Form
+                </h5>
+                <hr>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-2 p-3">
+                    <form action="/checkout" method="POST">
+                        
+                        <!-- {% csrf_token %}
+                        {{form.as_p}}
+                        <button class="btn btn-info">Place order</button> -->
+                       
+            
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for=""><p>Shipping Address</p></label>
+                            <input aria-describedby="helpId" class="form-control" name="address" placeholder=""
+                                   type="text">
+
+                        </div>
+                        <div class="form-group">
+                            <label for=""><p>Contact No.</p></label>
+                            <input aria-describedby="helpId" class="form-control" name="phone" placeholder=""
+                                   type="text">
+                        </div>
+                        
+
+                        <input class="btn float-right btn-outline-info col-lg-6" type="submit" value="Check out">
+                    </form>
+                </div>
+            </div>
+    </div>
+</div>
+
+<!-- checkout -->
+
+
+           
+{% endblock %}
