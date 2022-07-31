@@ -23,10 +23,13 @@ class Order(models.Model):
     status = models.BooleanField(default=False)
 
 
-    
+    # def __str__(self) -> str:
+    #     return self.address
+    #     return f'{self.product.name}--{self.customer.firstname} {self.customer.lastname}'
 
     def placeOrder(self):
         self.save()
+
 
     @staticmethod
     def get_orders_by_customer(customer_id):

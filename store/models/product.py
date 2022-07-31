@@ -14,6 +14,9 @@ class Product(models.Model):
 
     image = models.ImageField(upload_to='uploads/products/')
 
+    def __str__(self) -> str:
+        return self.name
+
     def get_absolute_url(self):
         return reverse("product-details", kwargs={
             'slug': self.slug
